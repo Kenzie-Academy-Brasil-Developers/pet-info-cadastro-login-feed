@@ -28,3 +28,25 @@ export async function getAllPosts() {
 }
 
 // Desenvolva as funcionalidades de requisições aqui
+export const emailUser = async (requestBody) => {
+  const userEmail = await fetch(`${baseUrl}/user/create`,{
+    method: "POST", 
+    headers: {
+      "content-Type": "apllication/json",
+    },
+    body: JSON.stringify(requestBody),
+  })
+    .then(async res =>{
+      const resConverted = await res.json();
+
+      if(res.ok) {
+        return resConverted;
+        throw new Erros(res.message);
+      } else {
+        throw new Error(resConverted.message);
+      }
+    })
+    .catch((err) => alert(err.message));
+
+  return userEmail;
+}
