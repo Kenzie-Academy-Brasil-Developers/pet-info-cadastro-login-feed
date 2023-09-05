@@ -1,5 +1,10 @@
+import { toast } from "./toast.js";
+
 const baseUrl = "http://localhost:3333";
 const token = localStorage.getItem("@petinfo:token");
+const green = "#087d5a"
+const red = "#c83751"
+
 
 const requestHeaders = {
   "Content-Type": "application/json",
@@ -28,11 +33,38 @@ export async function getAllPosts() {
 }
 
 // Desenvolva as funcionalidades de requisições aqui
-export const emailUser = async (requestBody) => {
-  const userEmail = await fetch(`${baseUrl}/user/create`,{
+export const loginRequest = async (requestBody) => {
+  console.log(requestBody)
+  const loginToken = await fetch(`${baseUrl}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+  }).then(async res => {
+    const resConverted = await res.json()
+    console.log(resConverted)
+
+    if (res.ok) {
+      toast("Login realizado com sucesso!", green)
+      localStorage.setItem("@petinfo:token", resConverted.token);
+      locations.replace("./src/pages/dashboard.html");
+
+      return resConverted;
+    } else {
+      toast(resConverted.message, red);
+    }
+  }).catch((err) => alert(err.message));
+  console.log(loginToken)
+  return loginToken;
+  
+};
+
+const createUser = async (requestBody) => {
+  const userCreated = await fetch(`${baseUrl}/users/create`,{
     method: "POST", 
     headers: {
-      "content-Type": "apllication/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(requestBody),
   })
@@ -48,5 +80,43 @@ export const emailUser = async (requestBody) => {
     })
     .catch((err) => alert(err.message));
 
-  return userEmail;
+  return userCreated;
+};
+
+export const readAllCategories = async() => {
+  const readAllCategories = await fetch(`${baseUrl}/categories/readAll`, {
+    method: "GET"
+  }).then(async res => {
+    const resConverted = await res.json()
+
+    if(res.ok){
+      return resConverted
+    }else{
+      throw new Error(resConverted.message)
+    }
+  }).catch(err => alert(err.essage))
+
+  return readAllCategories;
+}
+
+export const getProfile = async() => {
+  const token = localStorage.getItem("@petinfo:token")
+
+  const login = await fetch(`${baseUrl}/users/profile`,{
+    method: "GET",
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  }).then(async res => {
+    const resConverted = await res.json()
+
+    if(res.ok){
+      console.log(resConverted);
+    } else { 
+      throw new Error(resConverted.message);
+    }
+  })
+.catch(err => alert(err.message));
+
+  return login;
 }

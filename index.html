@@ -8,11 +8,13 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="./src/styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="./src/styles/globalStyles.css" />
     <link rel="stylesheet" href="./src/styles/index.css" />
 
     <!-- SCRIPTS -->
     <script type="module" src="./src/scripts/index.js" defer></script>
+    <script type="module" src="./src/scripts/toast.js" defer></script>
   </head>
   <body>
     <main class="main main--flex column-reversed">
@@ -37,9 +39,9 @@
           <label class="text3 bold" for="Email">Email</label>
           <input 
             name="email"
-            class="text3"
+            class="text3 inputLogin"
             type="email"
-            id="Email"
+            id="email"
             placeholder="Digite seu email aqui"
             required
           />
@@ -49,9 +51,9 @@
           <label class="text3 bold" for="Senha">Senha</label>
           <input
             name="password"
-            class="text3"
+            class="text3 inputLogin"
             type="password"
-            id="Senha"
+            id="password"
             placeholder="Digite sua senha aqui"
             required
           />
@@ -75,5 +77,6 @@
         </button>
       </form>
     </main>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </body>
 </html>

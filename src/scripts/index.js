@@ -1,23 +1,23 @@
 // Desenvolva as funcionalidades de login aqui
-import { emailUser} from "./requests.js";
 
+import { loginRequest } from "./requests.js";
 
-const handlEmailUser = () => {
+export const handleLogin = () => {
+    const inputs = document.querySelectorAll(".inputLogin");
 
-    const registerInputs = document.querySelector(".text3");
-    const loginButton = document.querySelector(".login__submit");
+    const button = document.querySelector("#login__submit");
 
-    loginButton.addEventListener("click",async (event) => {
-        event.preventDefault()
-        const emailUser = {}
+    button.addEventListener("click", async (event) => {
+        event.preventDefault();
 
-        registerInputs.forEach(input =>{
-            emailUser[input.email] = input.value;
+        const loginBody = {};
+
+        inputs.forEach(input => {
+            loginBody[input.name] = input.value;
         });
+       await loginRequest(loginBody);
+    });
+}
 
-        const user = await emailUser(emailUser);
-        console.log(user);
-    })
-};
+handleLogin();
 
-handlEmailUser();
