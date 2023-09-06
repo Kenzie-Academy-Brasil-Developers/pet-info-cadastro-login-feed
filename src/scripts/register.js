@@ -18,4 +18,16 @@ const handlNewUser = () => {
     })
 };
 
+const loginRedirect = () => {
+    const button = document.querySelector("#redirect__button");
+
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      
+      location.replace("../../")
+  
+    })
+  }
+
 handlNewUser();
+loginRedirect();

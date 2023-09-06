@@ -1,5 +1,4 @@
 // Desenvolva as funcionalidades de login aqui
-
 import { loginRequest } from "./requests.js";
 
 export const handleLogin = () => {
@@ -19,5 +18,17 @@ export const handleLogin = () => {
     });
 }
 
+const registerRedirect = () => {
+  const button = document.querySelector("#register__button");
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    
+    location.replace("./src/pages/register.html")
+
+  })
+}
+
 handleLogin();
+registerRedirect();
 

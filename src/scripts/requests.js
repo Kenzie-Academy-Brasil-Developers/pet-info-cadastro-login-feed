@@ -48,7 +48,7 @@ export const loginRequest = async (requestBody) => {
     if (res.ok) {
       toast("Login realizado com sucesso!", green)
       localStorage.setItem("@petinfo:token", resConverted.token);
-      locations.replace("./src/pages/dashboard.html");
+      location.replace("./src/pages/feed.html");
 
       return resConverted;
     } else {
