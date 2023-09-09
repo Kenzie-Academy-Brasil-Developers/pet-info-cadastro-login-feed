@@ -34,6 +34,21 @@ async function renderPost(post) {
   openButton.innerText = "Acessar publicação";
   openButton.dataset.id = post.id;
 
+
+  openButton.addEventListener("click", () => {
+    const openPost = document.querySelector("post__open");
+   
+
+    // let inputValue = inputPost.value;
+
+    const post = document.querySelectorAll(".post__open");
+    post.forEach((post, index) => {
+      post = index;
+
+      
+    })
+  })
+  
   postContainer.append(postHeader, postTitle, postContent, openButton);
 
   return postContainer;

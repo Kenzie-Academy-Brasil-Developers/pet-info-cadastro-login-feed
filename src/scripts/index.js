@@ -18,16 +18,15 @@ export const handleLogin = () => {
     });
 }
 
-const registerRedirect = () => {
+export const registerRedirect = () => {
   const button = document.querySelector("#register__button");
 
   button.addEventListener("click", (event) => {
     event.preventDefault();
     
     location.replace("./src/pages/register.html")
-
-  })
-}
+  });
+};
 
 handleLogin();
 registerRedirect();

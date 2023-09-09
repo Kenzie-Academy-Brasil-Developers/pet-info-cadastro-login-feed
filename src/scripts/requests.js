@@ -1,21 +1,25 @@
 import { toast } from "./toast.js";
 
 const baseUrl = "http://localhost:3333";
-const token = localStorage.getItem("@petinfo:token");
+
 const green = "#087d5a"
 const red = "#c83751"
 
+const requestHeaders = () => {
+  const token = localStorage.getItem("@petinfo:token");
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+}
 
-const requestHeaders = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
-};
 
 // Informações de usuário logado
 export async function getCurrentUserInfo() {
+
   const request = await fetch(`${baseUrl}/users/profile`, {
     method: "GET",
-    headers: requestHeaders,
+    headers: requestHeaders(),
   });
   const user = await request.json();
 
@@ -26,7 +30,7 @@ export async function getCurrentUserInfo() {
 export async function getAllPosts() {
   const request = await fetch(`${baseUrl}/posts`, {
     method: "GET",
-    headers: requestHeaders,
+    headers: requestHeaders(),
   });
   const posts = await request.json();
   return posts;
