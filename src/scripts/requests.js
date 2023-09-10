@@ -61,10 +61,9 @@ export const loginRequest = async (requestBody) => {
   }).catch((err) => alert(err.message));
   console.log(loginToken)
   return loginToken;
-  
 };
 
-const createUser = async (requestBody) => {
+export const createUser = async (requestBody) => {
   const userCreated = await fetch(`${baseUrl}/users/create`,{
     method: "POST", 
     headers: {
