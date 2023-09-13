@@ -1,11 +1,12 @@
 import { toast } from "./toast.js";
 
-const baseUrl = "http://localhost:3333";
+export const baseUrl = "http://localhost:3333";
+
 
 const green = "#087d5a"
 const red = "#c83751"
 
-const requestHeaders = () => {
+export const requestHeaders = () => {
   const token = localStorage.getItem("@petinfo:token");
   return {
     "Content-Type": "application/json",
@@ -13,30 +14,6 @@ const requestHeaders = () => {
   };
 }
 
-
-// Informações de usuário logado
-export async function getCurrentUserInfo() {
-
-  const request = await fetch(`${baseUrl}/users/profile`, {
-    method: "GET",
-    headers: requestHeaders(),
-  });
-  const user = await request.json();
-
-  return user;
-}
-
-// Listagem de posts
-export async function getAllPosts() {
-  const request = await fetch(`${baseUrl}/posts`, {
-    method: "GET",
-    headers: requestHeaders(),
-  });
-  const posts = await request.json();
-  return posts;
-}
-
-// Desenvolva as funcionalidades de requisições aqui
 export const loginRequest = async (requestBody) => {
   console.log(requestBody)
   const loginToken = await fetch(`${baseUrl}/login`, {
@@ -63,6 +40,39 @@ export const loginRequest = async (requestBody) => {
   return loginToken;
 };
 
+// Informações de usuário logado
+export async function getCurrentUserInfo() {
+
+  const request = await fetch(`${baseUrl}/users/profile`, {
+    method: "GET",
+    headers: requestHeaders(),
+  });
+  const user = await request.json();
+
+  return user;
+}
+
+// Listagem de posts
+export async function getAllPosts() {
+  const request = await fetch(`${baseUrl}/posts`, {
+    method: "GET",
+    headers: requestHeaders(),
+  });
+  const posts = await request.json();
+  return posts;
+}
+
+// Desenvolva as funcionalidades de requisições aqui
+export async function getPost(id) {
+  const request = await fetch(`${baseUrl}/posts/${id}`, {
+    method: "GET",
+    headers: requestHeaders(),
+  });
+  const posts = await request.json();
+  return posts;
+}
+
+
 export const createUser = async (requestBody) => {
   const userCreated = await fetch(`${baseUrl}/users/create`,{
     method: "POST", 
@@ -86,22 +96,6 @@ export const createUser = async (requestBody) => {
   return userCreated;
 };
 
-export const readAllCategories = async() => {
-  const readAllCategories = await fetch(`${baseUrl}/categories/readAll`, {
-    method: "GET"
-  }).then(async res => {
-    const resConverted = await res.json()
-
-    if(res.ok){
-      return resConverted
-    }else{
-      throw new Error(resConverted.message)
-    }
-  }).catch(err => alert(err.essage))
-
-  return readAllCategories;
-}
-
 export const getProfile = async() => {
   const token = localStorage.getItem("@petinfo:token")
 
@@ -114,7 +108,6 @@ export const getProfile = async() => {
     const resConverted = await res.json()
 
     if(res.ok){
-      console.log(resConverted);
     } else { 
       throw new Error(resConverted.message);
     }
@@ -123,3 +116,5 @@ export const getProfile = async() => {
 
   return login;
 }
+
+

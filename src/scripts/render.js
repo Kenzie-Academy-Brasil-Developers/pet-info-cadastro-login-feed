@@ -1,4 +1,4 @@
-import { getCurrentUserInfo, getAllPosts } from "./requests.js";
+import { getCurrentUserInfo, getAllPosts, getPost } from "./requests.js";
 
 // Renderiza todos os posts
 export async function renderAllPosts() {
@@ -33,22 +33,12 @@ async function renderPost(post) {
   openButton.classList.add("post__open", "text3", "bold");
   openButton.innerText = "Acessar publicação";
   openButton.dataset.id = post.id;
+  openButton.addEventListener("click", async () => {
+    const post = await getPost(openButton.dataset.id);
+    createPostModal(post);
 
-
-  openButton.addEventListener("click", () => {
-    const openPost = document.querySelector("post__open");
-   
-
-    // let inputValue = inputPost.value;
-
-    const post = document.querySelectorAll(".post__open");
-    post.forEach((post, index) => {
-      post = index;
-
-      
-    })
   })
-  
+
   postContainer.append(postHeader, postTitle, postContent, openButton);
 
   return postContainer;
@@ -62,8 +52,8 @@ async function checkEditPermission(authorID) {
     return true;
   } else {
     return false;
-  }
-}
+  };
+};
 
 // Renderiza o cabeçalho de um post no feed
 async function renderPostHeader(post) {
@@ -74,7 +64,7 @@ async function renderPostHeader(post) {
   const postHeader = document.createElement("header");
   postHeader.classList.add("post__header");
 
-  const postInfo = document.createElement("div");
+  const postInfo = document.createElement("div.post");
   postInfo.classList.add("post__info");
 
   const authorImage = document.createElement("img");
@@ -162,3 +152,37 @@ function handleDate(timeStamp) {
 
   return `${month} de ${year}`;
 }
+
+
+function createPostModal(post) {
+  
+  const modal = document.querySelector(".modal__controller")
+  
+  const modalContent = document.querySelector("#post__content")
+
+  modal.showModal();
+  modalContent.innerHTML = "";
+
+  const date = handleDate(post.created_at)
+
+  modalContent.insertAdjacentHTML("afterbegin",
+    `
+    <div class="modal__post__header">
+        <div>
+            <img src=${post.user.avatar} alt="" class="post__user__icon">
+            <p class="post__username">${post.user.username}</p>
+            <p class="post__date">${date}</p>
+        </div>
+        <button id = "closeBtn">X</button>
+    </div>
+    <div class="modal__post__content">
+        <h2>${post.title}</h2>
+        <p>${post.content}</p>
+    </div>
+    `)
+
+  const close = document.querySelector("#closeBtn")
+  close.addEventListener("click", () => {
+    modal.close();
+  });
+};

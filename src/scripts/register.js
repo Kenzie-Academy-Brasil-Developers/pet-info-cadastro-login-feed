@@ -1,20 +1,20 @@
-// Desenvolva as funcionalidades de cadastro aqui
+import { createUser } from "./requests.js";
 
 const handlNewUser = () => {
 
-    const registerInputs = document.querySelector(".text3");
+    const registerInputs = document.querySelectorAll(".fieldset__container input");
     const loginButton = document.querySelector("#register__submit");
 
     loginButton.addEventListener("click",async (event) => {
         event.preventDefault()
         const emailUser = {}
 
-        registerInputs.forEach(input =>{
-            emailUser[input.email] = input.value;
+        registerInputs.forEach((input) =>{
+            emailUser[input.name] = input.value;
         });
-
-        const user = await emailUser(emailUser);
-        console.log(user);
+       
+        const user = await createUser(emailUser);
+      
     })
 };
 
